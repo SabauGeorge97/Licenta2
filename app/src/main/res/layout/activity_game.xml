@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gameBackground"
+    tools:context="com.example.myapplication.GameActivity">
+
+    <RelativeLayout
+        android:id="@+id/playersSection"
+        android:layout_width="130dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/player2Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:fontFamily="serif"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/player2Checker"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/player2Name"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp" />
+
+        <com.example.myapplication.GUIComponents.DiceView
+            android:id="@+id/diceOne"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_centerInParent="true"
+            android:background="@android:color/white"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"/>
+
+
+        <com.example.myapplication.GUIComponents.DiceView
+            android:id="@+id/diceTwo"
+            android:layout_width="43dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="43dp"
+            android:layout_centerInParent="true"
+            android:background="@android:color/white"
+            android:layout_marginRight="15dp"/>
+
+        <TextView
+            android:id="@+id/player1Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/player1Checker"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="serif"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/player1Checker"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="30dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/playersSection"
+        android:fontFamily="serif"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.example.myapplication.GUIComponents.BoardView
+        android:id="@+id/board"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/notification"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@id/playersSection" />
+</RelativeLayout>

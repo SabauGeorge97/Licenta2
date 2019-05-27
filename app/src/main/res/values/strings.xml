@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Backgammon</string>
+    <string name="new_game">NEW GAME</string>
+    <string name="continue_game">CONTINUE GAME</string>
+    <string name="settings">GAME SETTINGS</string>
+    <string name="start">START GAME</string>
+    <string name="RadioComp">Computer</string>
+    <string name="RadioHuman">Human</string>
+    <string name="players1nick">Player 1 name:</string>
+    <string name="players2nick">Players 2 name:</string>
+    <string name="throwDices">ROLL</string>
+    <string name="stat">STATISTIC</string>
+    <string name="detectShake">Detect shake thresold:</string>
+    <string name="minShake">Minimal shake thresold:</string>
+    <string name="prefSave">SAVE CHANGES</string>
+    <string name="prefReset">RESET</string>
+</resources>

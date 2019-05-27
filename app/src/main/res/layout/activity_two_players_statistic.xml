@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gameBackground"
+    tools:context="com.example.myapplication.TwoPlayersStatisticActivity">
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/gameinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:fontFamily="serif"
+        android:text="GAME OVER.\nThe winner is "
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/removedata"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/buttonColor"
+        android:drawableBottom="@drawable/delete_small"
+        android:enabled="false"
+        android:visibility="invisible"
+        android:onClick="deleteData"/>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/sum"
+        android:layout_below="@id/gameinfo"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:id="@+id/sum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/player1_all"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="7dp"/>
+
+        <TextView
+            android:id="@+id/player2_all"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:textAlignment="viewEnd"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingRight="5dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginRight="7dp"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gameBackground"
+    tools:context="com.example.myapplication.SelectGameActivity"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="serif"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/player1"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="serif"
+        android:labelFor="@+id/player1"
+        android:text="Player 1"
+        android:textColorHighlight="@android:color/black"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/player1"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radioPlayer1"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:background="@color/editText"
+        android:fontFamily="serif"
+        android:inputType="text"
+        android:maxLength="15"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingStart="5dp"/>
+
+    <RadioGroup
+        android:id="@+id/radioPlayer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/startButton"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/computer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/buttonColor"
+            android:fontFamily="serif"
+            android:onClick="player1TypeChanged"
+            android:text="@string/RadioComp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/human1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/buttonColor"
+            android:checked="true"
+            android:fontFamily="serif"
+            android:onClick="player1TypeChanged"
+            android:text="@string/RadioHuman"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/buttonColor"
+        android:fontFamily="serif"
+        android:onClick="startGame"
+        android:text="@string/start"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startButton"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:fontFamily="serif"
+        android:labelFor="@+id/player2"
+        android:text="Player 2"
+        android:textColorHighlight="@android:color/black"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/player2"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewp2"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:background="@color/editText"
+        android:fontFamily="serif"
+        android:inputType="text"
+        android:maxLength="15"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingStart="5dp"/>
+
+    <RadioGroup
+        android:id="@+id/radioPlayer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/player2"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/computer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/buttonColor"
+            android:fontFamily="serif"
+            android:onClick="player2TypeChanged"
+            android:text="@string/RadioComp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/human2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/buttonColor"
+            android:checked="true"
+            android:fontFamily="serif"
+            android:onClick="player2TypeChanged"
+            android:text="@string/RadioHuman"
+            android:textStyle="bold" />
+    </RadioGroup>
+</RelativeLayout>
