@@ -23,8 +23,8 @@ public class  MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Bitmap img = BitmapFactory.decodeResource(getResources(),R.drawable.logo);
-        ((ImageView) findViewById(R.id.logo)).setImageBitmap(img);
+        // Bitmap img = BitmapFactory.decodeResource(getResources(),R.drawable.logo);
+        //((ImageView) findViewById(R.id.logo)).setImageBitmap(img);
 
         //accesam si modificam 'setarile'
         SharedPreferences settings = getSharedPreferences(PREF_FILE_NAME,MODE_PRIVATE);

@@ -345,7 +345,7 @@ public class GameLogic {
         names.add(gameData.getPlayers()[0].getName());
         names.add(gameData.getPlayers()[1].getName());
         Collections.sort(names);
-        dbModel.saveData(names.get(0), names.get(1), gameData.getPlayers()[gameData.getCurrentPlayer()].getName());
+        // dbModel.saveData(names.get(0), names.get(1), gameData.getPlayers()[gameData.getCurrentPlayer()].getName());
         gameInterface.finishGame(names.get(0), names.get(1), gameData.getPlayers()[gameData.getCurrentPlayer()].getName());
 
     }
@@ -472,6 +472,4 @@ public class GameLogic {
             }
         }
     }
-}
-
 }

@@ -69,6 +69,17 @@
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="30dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/player2Name"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="70dp"
+            android:onClick="roll"
+            android:text="ROLL DICE"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <TextView

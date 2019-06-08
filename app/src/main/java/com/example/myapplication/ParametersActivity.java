@@ -44,11 +44,11 @@ public class ParametersActivity extends AppCompatActivity{
 
     private void hideKeyboard(View v){
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        InputMethodManager.hideSoftInputFromWindow(v.getWindowToken(),0);
+        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(),0);
     }
 
     public void save (View view){
-        String text = ((EditText)findViewById(R.id.detectShake).getText().toString());
+        String text = ((EditText)findViewById(R.id.detectShake)).getText().toString();
         SharedPreferences settings = getSharedPreferences(PREF_FILE_NAME,MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         boolean change = false;

@@ -35,7 +35,7 @@ public class ImageData {
         wunit = w/15f;
         hunit = h/16f;
         createShapes();
-        Checker.getSize(hunit/1.6f);
+        Checker.setSize(hunit/1.6f);
         controller.sizeSet();
     }
 
@@ -227,7 +227,5 @@ public class ImageData {
     public void addToBlot(int num, int color) {
         for(int i = 0; i < num; i++)
             blot.addChecker(color);
-    }
-}
     }
 }

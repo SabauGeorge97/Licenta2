@@ -57,7 +57,7 @@ public class Checker implements Serializable{
 
     public static void setSize(float size){ Checker.size = size; }
 
-    public void getBorderSize() { return borderColor.getStrokeWidth();}
+    public float getBorderSize() { return borderColor.getStrokeWidth();}
     public void setBorderSize(float borderSize){ this.borderColor.setStrokeWidth(borderSize);}
 
     public Paint getBorderColor(){ return borderColor; }

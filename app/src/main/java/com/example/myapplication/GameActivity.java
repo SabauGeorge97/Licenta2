@@ -24,6 +24,7 @@ import com.example.myapplication.GUIComponents.Checker;
 import com.example.myapplication.GUIComponents.DiceView;
 import com.example.myapplication.GUIComponents.ImageData;
 import com.example.myapplication.gameLogic.GameLogic;
+import static com.example.myapplication.UtilParameter.*;
 
 import java.util.ArrayList;
 

@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".players.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,12 +24,12 @@
             android:name=".GameActivity"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".players.SelectGameActivity"
+            android:name=".SelectGameActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".TwoPlayersStatisticActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".players.ParametersActivity"></activity>
+        <activity android:name=".ParametersActivity"></activity>
     </application>
 
 </manifest>
