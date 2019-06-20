@@ -25,7 +25,6 @@ public class GameLogic {
     }
 
     public interface GameInterface{
-        void setShakeEnable(boolean shakeEnable);
 
         void setClickEnable(boolean clickEnable);
 
@@ -148,7 +147,7 @@ public class GameLogic {
     }
 
     private void continuePlaying() {
-        gameInterface.setShakeEnable(false);
+
         int[] dices = gameData.getDices();
         gameInterface.setDices(dices[0] > 0? diceNumber[dices[0]-1]: null, dices[1]>0?diceNumber[dices[1]-1]: null);
         switch (gameData.gameState) {
@@ -169,7 +168,6 @@ public class GameLogic {
                 break;
             case GameData.SelectPlayer:
             case GameData.ThrowDices:
-                gameInterface.setShakeEnable(true);
                 throwDices();
                 break;
         }
@@ -210,14 +208,13 @@ public class GameLogic {
         /*trazi od igraca da baci kocke
          * (za sad radi random)*/
         if(gameData.gameState == GameData.SelectPlayer)
-            gameInterface.refresh("Shake the device to determine playing order", false);
+            gameInterface.refresh("Press 'ROLL DICE' to determine playing order", false);
         else
-            gameInterface.refresh("Shake the device to throw the dices", true);
+            gameInterface.refresh("Press 'ROLL DICE' to throw the dices", true);
         gameData.getPlayers()[gameData.getCurrentPlayer()].rollDices(this);
     }
 
     public void dicesThrown() {
-        gameInterface.setShakeEnable(false);
         if (gameData.gameState == GameData.SelectPlayer)
             determineOrder((int) (Math.random() * 5) + 1);
         else {
@@ -335,11 +332,6 @@ public class GameLogic {
     }
 
     private void finishGame() {
-       /* EndGameDialog dialog = new EndGameDialog();
-        Bundle arg = new Bundle();
-        arg.putString("winner", gameData.getPlayers()[gameData.getCurrentPlayer()].getName());
-        dialog.setArguments(arg);
-        dialog.show(((Activity) gameInterface).getFragmentManager(), "endGame");*/
         ((GameActivity) gameInterface).deleteFile("savedGame.txt");
         ArrayList<String> names = new ArrayList<>();
         names.add(gameData.getPlayers()[0].getName());
@@ -359,10 +351,6 @@ public class GameLogic {
 
     public void setClickEnable() {
         gameInterface.setClickEnable(true);
-    }
-
-    public void setShakeEnable() {
-        gameInterface.setShakeEnable(true);
     }
 
     public void fingerDown(PointF position) {

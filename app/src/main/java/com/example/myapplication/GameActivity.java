@@ -1,15 +1,10 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,15 +19,12 @@ import com.example.myapplication.GUIComponents.Checker;
 import com.example.myapplication.GUIComponents.DiceView;
 import com.example.myapplication.GUIComponents.ImageData;
 import com.example.myapplication.gameLogic.GameLogic;
-import static com.example.myapplication.UtilParameter.*;
 
 import java.util.ArrayList;
 
-public class GameActivity extends AppCompatActivity implements GameLogic.GameInterface, View.OnTouchListener,
-        SensorEventListener {
+public class GameActivity extends AppCompatActivity implements GameLogic.GameInterface, View.OnTouchListener {
 
     private GameLogic gameLogic;
-    private boolean shakeEnabled = false;
     private boolean clickEnabled = false;
 
     private TextView messageBox;
@@ -40,17 +32,9 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
     private int player = 1;
     private BoardView table;
 
-    private SensorManager sensorManager;
-    private Sensor accelerometer;
-    private boolean oldValShake;
     private boolean oldValClick;
     private boolean paused = false;
 
-    private boolean shaking;
-    private float accelLastGravity = 0.0f;
-    private float accelCurrentGravity = 0.0f;
-    private float accel = 0f;
-    private float alpha = 0.8f;
     private MediaPlayer mediaPlayer;
 
     @Override
@@ -69,7 +53,7 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
 
         Intent intent = getIntent();
         boolean continueGame = intent.getBooleanExtra("savedGame", false);
-        if(!continueGame) {
+        if (!continueGame) {
             String player1 = intent.getStringExtra("PLAYER1");
             String player2 = intent.getStringExtra("PLAYER2");
             int compNum = intent.getIntExtra("COMP_NUM", -1);
@@ -78,14 +62,12 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
             setPlayersData(player1, player2);
             gameLogic = new GameLogic(compNum, player1, player2, this, imageData);
             imageData.setController(gameLogic);
-        }else{
+        } else {
             ImageData imageData = table.getImageData();
             gameLogic = new GameLogic(this, imageData);
             imageData.setController(gameLogic);
         }
 
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
     @Override
@@ -121,10 +103,6 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
         image.setImageBitmap(tempBitmap);
     }
 
-    @Override
-    public void setShakeEnable(boolean shakeEnable) {
-        this.shakeEnabled = shakeEnable;
-    }
 
     @Override
     public void setClickEnable(boolean clickEnable) {
@@ -138,9 +116,10 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
             table.invalidate();
     }
 
-    public void setActivePlayer(int num){
+    public void setActivePlayer(int num) {
         player = num;
     }
+
     @Override
     public void changeActivePlayer() {
         players[player].setTextColor(Color.WHITE);
@@ -151,11 +130,11 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
 
     @Override
     public void setDices(ArrayList<Integer> one, ArrayList<Integer> two) {
-        if(one != null) {
+        if (one != null) {
             ((DiceView) findViewById(R.id.diceOne)).setNumber(one);
             ((DiceView) findViewById(R.id.diceOne)).invalidate();
         }
-        if(two != null) {
+        if (two != null) {
             ((DiceView) findViewById(R.id.diceTwo)).setNumber(two);
             ((DiceView) findViewById(R.id.diceTwo)).invalidate();
         }
@@ -209,68 +188,21 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
 
     @Override
     public void onResume() {
-        if(paused) {
-            shakeEnabled = oldValShake;
+        if (paused) {
             clickEnabled = oldValClick;
             paused = false;
         }
         super.onResume();
-        // Add the following line to register the Session Manager Listener onResume
-        sensorManager.registerListener(this, accelerometer,	SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
     public void onPause() {
         // Add the following line to unregister the Sensor Manager onPause
-        sensorManager.unregisterListener(this);
-        oldValShake = shakeEnabled;
-        shakeEnabled = false;
+
         oldValClick = clickEnabled;
         clickEnabled = false;
         paused = true;
         super.onPause();
     }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (shakeEnabled) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-
-            float SHAKE_THRESHOLD = getSharedPreferences(PREF_FILE_NAME, MODE_PRIVATE).getFloat(DETECT_SHAKE, UtilParameter.SHAKE_THRESHOLD);
-            float MIN_SHAKE_THRESHOLD = getSharedPreferences(PREF_FILE_NAME, MODE_PRIVATE).getFloat(MIN_SHAKE, UtilParameter.MIN_SHAKE_THRESHOLD);
-            accelLastGravity = accelCurrentGravity;
-            accelCurrentGravity = (float) Math.sqrt((double) (x*x + y*y + z*z));
-            float delta = (float)Math.abs(accelCurrentGravity - accelLastGravity);
-
-            accel =  accel * alpha + (1-alpha)*delta;
-            if (accel > SHAKE_THRESHOLD && !shaking) {
-                shakeStarted();
-            }
-            else if(accel < 3f && shaking)
-                shakeStopped();
-        }
-
-    }
-
-    private void shakeStopped() {
-        shaking = false;
-        gameLogic.dicesThrown();
-        mediaPlayer.stop();
-        mediaPlayer.reset();
-        mediaPlayer.release();
-    }
-
-    private void shakeStarted() {
-        shaking = true;
-        mediaPlayer = MediaPlayer.create(this, R.raw.dices);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.start();
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 }
+

@@ -14,7 +14,6 @@ public class HumanPlayer extends Player {
 
     @Override
     public void rollDices(GameLogic gameLogic) {
-        gameLogic.setShakeEnable();
 
     }
 }
