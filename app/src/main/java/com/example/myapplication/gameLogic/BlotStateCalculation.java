@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 public class BlotStateCalculation implements CalculationState {
+    // reintroducerea pieselor dupa scoaterea
     @Override
     public void calculateMoves(GameData gameData) {
         LinkedHashMap<Integer, ArrayList<Integer>> result = new LinkedHashMap<>();

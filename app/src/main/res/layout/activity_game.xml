@@ -44,11 +44,11 @@
         <com.example.myapplication.GUIComponents.DiceView
             android:id="@+id/diceTwo"
             android:layout_width="43dp"
-            android:layout_alignParentRight="true"
             android:layout_height="43dp"
-            android:layout_centerInParent="true"
-            android:background="@android:color/white"
-            android:layout_marginRight="15dp"/>
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:background="@android:color/white" />
 
         <TextView
             android:id="@+id/player1Name"
@@ -102,4 +102,5 @@
         android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp"
         android:layout_toRightOf="@id/playersSection" />
+
 </RelativeLayout>

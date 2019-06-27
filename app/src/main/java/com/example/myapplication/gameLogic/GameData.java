@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class GameData implements Serializable {
 
+    // starea jocului
+    // starea in care se afla jocul
     public static final int SelectPlayer = 0;
     public static final int ThrowDices = 1;
     public static final int CalculateMoves = 2;
@@ -25,40 +27,44 @@ public class GameData implements Serializable {
     public static final int outOfMoves = 8;
     public static final int finished = 9;
 
+    // logica care calculeaza posibilele mutari
     private CalculationState[] calculationStates = new CalculationState[3];
-    private int[] table = new int[24];
-    private Player[] players = new Player[2];
+    private int[] table = new int[24]; // mutarile pe care le putem avea
+    private Player[] players = new Player[2]; // playerii construiti
     private int[] blots = new int[2];
-    int gameState = SelectPlayer;
+    int gameState = SelectPlayer; //prima stare in care insta gamestate-ul este de selectare a playerului
     private int startingRow;
     private int newRow;
-    private int[] doubleDices = null;
+    private int[] doubleDices = null; //situatia de aruncare a dublei
 
-    private int currentPlayer;
-    private int[] dices = new int[2];
+    private int currentPlayer; // cine urmeaza la rand
+    private int[] dices = new int[2]; // crearea de zaruri
 
-    private LinkedHashMap<Integer, ArrayList<Integer>> possibleMoves;
+    private LinkedHashMap<Integer, ArrayList<Integer>> possibleMoves; // din pozitia 3 , poti ajunge in pozitia 5,7,etc.
 
 
     public GameData(int compNum, String player1, String player2) {
-        calculationStates[0] = new RegularStateCalculation();
-        calculationStates[1] = new BlotStateCalculation();
-        calculationStates[2] = new BearingOffStateCalculation();
+        calculationStates[0] = new RegularStateCalculation(); // asezarea
+        calculationStates[1] = new BlotStateCalculation(); // miscarea
+        calculationStates[2] = new BearingOffStateCalculation(); // scoaterea
 
+        //numarul de piese de pe fiecare pozitie
         for (int i = 0; i < 24; i++)
             table[i] = 0;
+
 
         players[0] = compNum == 0 ? new CompPlayer(-1, player1) : new HumanPlayer(-1, player1);
         players[1] = compNum == 1 ? new CompPlayer(1, player2) : new HumanPlayer(1, player2);
 
     }
 
+
     public GameData() {
         calculationStates[0] = new RegularStateCalculation();
         calculationStates[1] = new BlotStateCalculation();
         calculationStates[2] = new BearingOffStateCalculation();
-
     }
+
 
     public int[] getTable() {
         return table;
@@ -101,7 +107,7 @@ public class GameData implements Serializable {
         this.possibleMoves = possibleMoves;
     }
 
-
+    // seteaza valorile zarurilor
     public void setDiceOne(int diceOne) {
         dices[0] = diceOne;
     }
@@ -122,6 +128,7 @@ public class GameData implements Serializable {
         return startingRow;
     }
 
+    //schimbarea de jucator
     public void changeCurrentPlayer() {
         currentPlayer = (currentPlayer + 1) % 2;
     }
@@ -162,6 +169,7 @@ public class GameData implements Serializable {
         return newRow;
     }
 
+    // ia toate valorile din GameData si le pune pe memoria telefonului
     public void saveGame(FileOutputStream fos) throws IOException {
 
         fos.write((players[0].getName() + "\n").getBytes());
@@ -216,6 +224,7 @@ public class GameData implements Serializable {
         }
     }
 
+    // ia din fisierul salvat si interpreteaza textul si seteaza valorile din GameData
     public void loadGame(BufferedReader bufferedReader) throws IOException {
 
 
@@ -264,11 +273,13 @@ public class GameData implements Serializable {
         }
     }
 
+
     public void setDoubleDices(int b) {
         doubleDices = new int[2];
         doubleDices[0] = doubleDices[1] = b;
     }
 
+    // zaruri duble
     public void setDoubleDicesForPlaying(){
         dices = doubleDices;
         doubleDices = null;

@@ -26,15 +26,12 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
 
     private GameLogic gameLogic;
     private boolean clickEnabled = false;
-
     private TextView messageBox;
     private TextView[] players = new TextView[2];
     private int player = 1;
     private BoardView table;
-
     private boolean oldValClick;
     private boolean paused = false;
-
     private MediaPlayer mediaPlayer;
 
     @Override
@@ -70,6 +67,7 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
 
     }
 
+    // se stabilesc numele jucătorilor
     @Override
     public void setPlayersData(String player1, String player2) {
         ((TextView) findViewById(R.id.player1Name)).setText(player1);
@@ -93,6 +91,7 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
         });
     }
 
+    // în această funcție vom desene cele 2 checkere
     private void setImage(ImageView image, int color) {
         int w = image.getWidth();
         Bitmap tempBitmap = Bitmap.createBitmap(w, w, Bitmap.Config.ARGB_8888);
@@ -116,14 +115,16 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
             table.invalidate();
     }
 
+    //jucătorul activ la momentul actual
     public void setActivePlayer(int num) {
         player = num;
     }
 
+    // schimbarea jucătorului
     @Override
     public void changeActivePlayer() {
         players[player].setTextColor(Color.WHITE);
-        player = (player + 1) % 2;
+        player = (player + 1) % 2; // schimbă jucătorul
         players[player].setTextColor(Color.parseColor("#a18d78"));
     }
 
@@ -143,6 +144,7 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
     @Override
     public void finishGame(String player1, String player2, String winner) {
         Intent intent = new Intent(this, TwoPlayersStatisticActivity.class);
+        //putExtra
         intent.putExtra("Player1", player1);
         intent.putExtra("Player2", player2);
         intent.putExtra("Winner", winner);
@@ -197,8 +199,6 @@ public class GameActivity extends AppCompatActivity implements GameLogic.GameInt
 
     @Override
     public void onPause() {
-        // Add the following line to unregister the Sensor Manager onPause
-
         oldValClick = clickEnabled;
         clickEnabled = false;
         paused = true;

@@ -28,6 +28,7 @@ public class ImageData {
     Paint triangleColor[];
     private Checker selectedChecker;
 
+    //dimensiunea ecranului
     public void setSize(int w,int h){
         this.w = w;
         this.h = h;
@@ -39,6 +40,7 @@ public class ImageData {
         controller.sizeSet();
     }
 
+    // desenarea tablei
     private void createShapes(){
         topBar = new Border (0 , w, 0 , hunit / 2);
         bottomBar = new Border (0 , w , h - hunit / 2, h);
@@ -46,12 +48,15 @@ public class ImageData {
         leftBar = new Border(0,wunit,0,h);
         rightBar = new Border(w-wunit,w,0,h);
 
+        //triunghirile
         Paint brightColor = createTrianglePaint(Color.parseColor("#E3854E"));
         Paint darkColor = createTrianglePaint(Color.parseColor("#9B4C1E"));
         triangleColor = new Paint[2];
         triangleColor[0] = brightColor;
         triangleColor[1] = darkColor;
 
+
+        //2%2 = triunghi alb
         for (int i = 0; i < 6; i++)
             board[i] = new Triangle((13 - i) * wunit, h - hunit / 2, (14 - i) * wunit, h - hunit / 2, (13 - i + 0.5f) * wunit, h - 7.5f * hunit, triangleColor[i % 2], -1);
 
@@ -66,6 +71,7 @@ public class ImageData {
 
     }
 
+
     private Paint createTrianglePaint(int color) {
         Paint paint = new Paint();
         paint.setStrokeWidth(2);
@@ -74,6 +80,7 @@ public class ImageData {
         return paint;
     }
 
+    // functia desenarea
     public void draw(Canvas canvas) {
         topBar.draw(canvas);
         bottomBar.draw(canvas);
@@ -112,7 +119,6 @@ public class ImageData {
 
     }
 
-
     public void resetColorChecker() {
         Paint newColor = new Paint();
         newColor.setStyle(Paint.Style.STROKE);
@@ -143,6 +149,7 @@ public class ImageData {
                 board[i].setColor(triangleColor[i % 2]);
     }
 
+    // dupa ce dai click pe ea , se highlightuieste
     public int highlightedClicked(PointF position) {
         if (highlightedCheckers == null)
             return -2;
@@ -158,6 +165,7 @@ public class ImageData {
         return -2;
     }
 
+    //ia cercul si-l muta pe o noua pozitie
     public void moveChecker(PointF position) {
         if (selectedChecker != null)
             selectedChecker.setPosition(position);
@@ -170,6 +178,7 @@ public class ImageData {
             board[r].addChecker(selectedChecker.getColor().getColor());
         selectedChecker = null;
     }
+
 
     public int dropOnTriangle(PointF position, ArrayList<Integer> rows) {
         for (Integer r : rows) {
@@ -208,22 +217,27 @@ public class ImageData {
             return blot.whiteCount() > 0;
     }
 
+    //dupa ce am mutat o piesa,sa o scoata din pozitia veche
     public void removeChecker(int oldPosition) {
         board[oldPosition].removeChecker();
     }
 
+    //ca sa dispara cercul de pe mijloc
     public void removeFromBlot(int checkerColor) {
         blot.removeChecker(checkerColor);
     }
 
+    //daca e dat click pe checker, si dupaia dai click pe alt checker,cel selectat primul sa nu mai fie selectat
     public void removeSelectedChecker() {
         selectedChecker = null;
     }
+
 
     public boolean droppedOnHomeBar(PointF position) {
         return rightBar.getPosition().contains(position.x, position.y);
     }
 
+    // scoate piesa de pe tabla
     public void addToBlot(int num, int color) {
         for(int i = 0; i < num; i++)
             blot.addChecker(color);

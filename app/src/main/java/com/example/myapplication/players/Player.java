@@ -5,6 +5,7 @@ import com.example.myapplication.gameLogic.GameLogic;
 
 import java.io.Serializable;
 
+// clasa de baza care reprezinta un jucator ( fie om,fie calculator )
 public abstract class Player implements Serializable{
     protected int checkers;
     protected int state = CalculationState.RegularState;

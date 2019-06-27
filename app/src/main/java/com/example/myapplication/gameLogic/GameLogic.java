@@ -24,6 +24,7 @@ public class GameLogic {
        return ((GameActivity)gameInterface);
     }
 
+    // defineste o interfata prin care permit altor obiecte si clase sa controleze jocul
     public interface GameInterface{
 
         void setClickEnable(boolean clickEnable);
@@ -43,10 +44,11 @@ public class GameLogic {
 
     private GameData gameData;
     private GameInterface gameInterface;
-    private ImageData imageData;
+    private ImageData imageData; // functiile care deseneaza
     private boolean continuedGame = false;
     private ArrayList<Integer> [] diceNumber = new ArrayList[6];
 
+    // constructor pentru new game
     public GameLogic(int compNum, String player1, String player2, GameInterface gameInterface, ImageData imageData) {
         this.gameInterface = gameInterface;
         this.imageData = imageData;
@@ -56,12 +58,14 @@ public class GameLogic {
         initDiceNumbers();
     }
 
+    //constructor pentru continue game
     public GameLogic(GameInterface gameInterface, ImageData imageData) {
         continuedGame = true;
         this.gameInterface = gameInterface;
         this.imageData = imageData;
 
         gameData = new GameData();
+        //citeste din saveGame.txt
         try (FileInputStream fis = ((GameActivity) gameInterface).openFileInput("savedGame.txt");
              InputStreamReader isr = new InputStreamReader(fis);
              BufferedReader bufferedReader = new BufferedReader(isr)) {
@@ -76,6 +80,7 @@ public class GameLogic {
         ((GameActivity) gameInterface).deleteFile("savedGame.txt");
         initDiceNumbers();
     }
+
     private void initDiceNumbers() {
         ArrayList<Integer> temp = new ArrayList<>();
         temp.add(4);
@@ -111,6 +116,7 @@ public class GameLogic {
             throwDices();
     }
 
+    //construirea tablei de joc
     private void setTable() {
         int[] table = gameData.getTable();
         if (continuedGame) {
@@ -124,7 +130,8 @@ public class GameLogic {
             if (blot[1] > 0)
                 imageData.addToBlot(blot[1], Color.DKGRAY);
         } else {
-
+            // modul de asezare
+            // negative pentru un jucator,pozitive pentru alt jucator
             table[0] = 2;
             table[5] = -5;
             table[7] = -3;
@@ -134,7 +141,7 @@ public class GameLogic {
             table[18] = 5;
             table[23] = -2;
 
-            imageData.setCheckers(0, 2, Color.DKGRAY);
+            imageData.setCheckers(0, 2, Color.DKGRAY); // pe pozitia 0 , 2 piese de culoare 0
             imageData.setCheckers(5, 5, Color.WHITE);
             imageData.setCheckers(7, 3, Color.WHITE);
             imageData.setCheckers(11, 5, Color.DKGRAY);
@@ -205,8 +212,7 @@ public class GameLogic {
     }
 
     private void throwDices() {
-        /*trazi od igraca da baci kocke
-         * (za sad radi random)*/
+
         if(gameData.gameState == GameData.SelectPlayer)
             gameInterface.refresh("Press 'ROLL DICE' to determine playing order", false);
         else
@@ -218,9 +224,7 @@ public class GameLogic {
         if (gameData.gameState == GameData.SelectPlayer)
             determineOrder((int) (Math.random() * 5) + 1);
         else {
-            /*poziva se kada korisnik baci kocke
-             * odavde se postavi modelu sta treba i
-             * prelazi na calculateMoves*/
+
             int diceOne = (int) (Math.random() * 5) + 1;
             int diceTwo = (int) (Math.random() * 5) + 1;
             gameInterface.setDices(diceNumber[diceOne-1], diceNumber[diceTwo-1]);
@@ -252,7 +256,8 @@ public class GameLogic {
     }
 
     private void play() {
-        /*kazi igracu da igra*/
+
+        //fig 3.5,3.6,3.7
         if (gameData.getPossibleMoves().size() == 1 && gameData.getPossibleMoves().get(-1) != null)
             imageData.highlightFromBlot(-1, gameData.getPlayers()[gameData.getCurrentPlayer()].getCheckers());
         else
@@ -262,10 +267,7 @@ public class GameLogic {
     }
 
     public void endOfMove() {
-        /*igrac zavrsio potez. proveri ako je prvi potez,
-         * da li ima jos poteza. Ako je drugi potez, da li opet
-         * baca kocke. Ako nista, predji na sledeceg i opet sve
-         * */
+        /* daca jucatorul la rand , si-a efectuat miscarile */
         gameInterface.setClickEnable(false);
         int newPos = gameData.getNewRow();
         int old = gameData.getStartingRow();
@@ -280,6 +282,8 @@ public class GameLogic {
             play();
         } else {
             Player currPlayer = gameData.getPlayers()[gameData.getCurrentPlayer()];
+
+            //daca jucatorul a ajuns in casa cu toate piesele si si-a scos toate piesele
             if (currPlayer.getState() == CalculationState.BearingOffState
                     && gameData.countInHomeBoard(currPlayer.getCheckers()) == 0) {
                 gameData.gameState = GameData.finished;
@@ -292,13 +296,13 @@ public class GameLogic {
             }
             int move = Math.abs(newPos - old);
             if (old == -1 && gameData.getCurrentPlayer() == 0)
-                move = 24 - newPos;
+                move = 24 - newPos; // 24 - noua pozitie
             if (newPos == 24 && gameData.getCurrentPlayer() == 0)
                 move = old + 1;
             int[] dices = gameData.getDices();
             boolean oneMove;
             if (oneMove = dices[0] == move)
-                dices[0] = -1;
+                dices[0] = -1; // starea default a zarului,nu inseamna nimic
             else if (oneMove = dices[1] == move)
                 dices[1] = -1;
             else if (dices[0] + dices[1] == move)
@@ -337,7 +341,6 @@ public class GameLogic {
         names.add(gameData.getPlayers()[0].getName());
         names.add(gameData.getPlayers()[1].getName());
         Collections.sort(names);
-        // dbModel.saveData(names.get(0), names.get(1), gameData.getPlayers()[gameData.getCurrentPlayer()].getName());
         gameInterface.finishGame(names.get(0), names.get(1), gameData.getPlayers()[gameData.getCurrentPlayer()].getName());
 
     }
@@ -349,10 +352,12 @@ public class GameLogic {
         throwDices();
     }
 
+    //doar apasam degetu pe piesa si il ridicam
     public void setClickEnable() {
         gameInterface.setClickEnable(true);
     }
 
+    // piesa pe care vreau s-o mut
     public void fingerDown(PointF position) {
         int id = imageData.highlightedClicked(position);
         gameData.setStartingRow(id);
@@ -370,6 +375,7 @@ public class GameLogic {
         gameInterface.refresh("Make your move. You can drop on highlighted triangles.", true);
     }
 
+    // unde vreau sa mut piesa
     public void fingerUp(PointF position) {
         Player currPlayer = gameData.getPlayers()[gameData.getCurrentPlayer()];
         if (gameData.getStartingRow() > -2) {
@@ -402,6 +408,7 @@ public class GameLogic {
         return gameData.getPossibleMoves();
     }
 
+    // ia piesa de pe vechea pozitie si o pune pe noua pozitie
     public void moveChecker(int oldPosition, int newPosition) {
         Player currentPlayer = gameData.getPlayers()[gameData.getCurrentPlayer()];
         int[] table = gameData.getTable();
@@ -424,6 +431,7 @@ public class GameLogic {
             gameData.getPlayers()[(gameData.getCurrentPlayer() + 1) % 2].setState(CalculationState.BlotState);
         }
     }
+
 
     public void moveGUIChecker(int oldPosition, int newPosition) {
         int checkerColor = gameData.getCurrentPlayer() == 0 ? Color.WHITE : Color.DKGRAY;

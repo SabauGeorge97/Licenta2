@@ -28,19 +28,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:background="@color/buttonColor"
-        android:drawableBottom="@drawable/delete_small"
         android:enabled="false"
         android:visibility="invisible"
         android:onClick="deleteData"/>
-
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/sum"
-        android:layout_below="@id/gameinfo"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp" />
 
     <LinearLayout
         android:id="@+id/sum"

@@ -6,6 +6,8 @@ import android.graphics.PointF;
 
 import java.util.ArrayList;
 
+//deseneaza toate piesele pe mijlocul tablei
+//blot = bara din mijloc
 public class Blot extends Border {
     ArrayList<Checker> white = new ArrayList<>();
     ArrayList<Checker> black = new ArrayList<>();
